@@ -7,20 +7,23 @@ import { AppComponent } from './app.component';
 import { DynamicComponent1 } from './dynamic1.component';
 import { DynamicComponent2 } from './dynamic2.component';
 import { MyStructuralDirective } from './my-structural-directive.directive';
+import { MockDataService } from './services/mocks-data.service'
+
 
 @NgModule({
   declarations: [
     AppComponent,
     DynamicComponent1,
     DynamicComponent2,
-    MyStructuralDirective
+    MyStructuralDirective,
+    
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule
   ],
-  providers: [],
+  providers: [ MockDataService ],
   bootstrap: [AppComponent],
   entryComponents: [ DynamicComponent1, DynamicComponent2 ]  // here all dynamic components that are available should be
 })
