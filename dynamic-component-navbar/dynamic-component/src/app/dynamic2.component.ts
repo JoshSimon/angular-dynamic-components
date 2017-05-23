@@ -6,8 +6,8 @@ later have access to all the dynamic components in one place */
 @Component({
     template: `
     <div>
-        <h2>{{data.h2}}</h2>
-        <h3>{{data.h3}}</h3>
+        <h2>{{data.name}}</h2>
+        <h3>{{data.id}}</h3>
     </div>
     `
 })
