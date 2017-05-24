@@ -14,5 +14,5 @@ later have access to all the dynamic components in one place */
 
 export class DynamicComponent1 implements FixedPartOfTheDynamicComponent {
 
-    @Input() data: any; // gets the data, looking to fill the template with that --> f.e. "{{data.h1}}"
+    @Input() data: any; // gets the data, looking to fill the template with that 
 }

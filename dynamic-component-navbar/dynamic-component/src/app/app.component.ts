@@ -2,18 +2,17 @@ import { Component, Input, AfterViewInit, ViewChild, ComponentFactoryResolver, O
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 /* CUSTOM COMPONENTS */
-import { MyStructuralDirective } from './my-structural-directive.directive';
-import { FixedPartOfTheDynamicComponent } from './fixed-part-of-dynamic.component';
+import { MyStructuralDirective } from './dynamic-component/my-structural-directive.directive';
+import { FixedPartOfTheDynamicComponent } from './dynamic-component/fixed-part-of-dynamic.component';
 import { DynamicComponent } from './app.dynamic.component';
-import { DynamicComponent1 } from './dynamic1.component';
-import { DynamicComponent2 } from './dynamic2.component';
+import { DynamicComponent1 } from './dynamic-component/dynamic1.component';
+import { DynamicComponent2 } from './dynamic-component/dynamic2.component';
 
 /* DATA SERVICES */
 import { MockDataService } from './services/mocks-data.service'
 
 /* DATA MODELS*/
 import { MockDataModel } from './data-models/mock-data.model';
-import { ExistingComponentsModel } from './data-models/exisiting-components.model'
 
 @Component({
   selector: 'app-root',
@@ -24,18 +23,12 @@ export class AppComponent {
 
   mocks: MockDataModel[]; // array of mock data
   dynamicComponentsToChooseFrom: DynamicComponent[]; // array of components that will created dynamically
-  arrayOfAllExistingComponents: ExistingComponentsModel[]; // array keeps the existing components with its dedicated id //TODO: data type
 
   /* CONSTRUCTOR */
   // constructs the component factory resolver and the data service for loading the mocks
   // additionally creates the first default entry in the "arrayOfAllExistingComponents" array with its construction
   constructor(private myComponentFactoryResolver: ComponentFactoryResolver, private mockService: MockDataService) {
     this.instanciateDynamicComponentWithMockData();
-    this.arrayOfAllExistingComponents = [{
-      "name": this.dynamicComponentsToChooseFrom[0].data.name,
-      "id": "ngb-tab-1 ",
-      "description": this.dynamicComponentsToChooseFrom[0].data.name
-    }];
     console.log(this.mocks[0]);
   };
   // instanciating is done within the constructor, because it has to be finished before the dynamic components are loaded
@@ -59,9 +52,7 @@ export class AppComponent {
   // life cycle hook that explores the dynamic possible child elements to be able to build them later on in runtime 
   // or it creates the child views to Angular terminology
   ngAfterViewInit() {
-    console.log('INSTAINSTA')
     this.loadMyDynamicComponent(this.dynamicComponentsToChooseFrom[0]); //loading the default first item out of the "dynamicComponents" array   
-
   };
   // this function lives within the life cycle hook
   // it references the container where to attach the view ( the dynamically created component )
@@ -81,63 +72,6 @@ export class AppComponent {
     // ??? so I am only using the first entry of mocks ???
   }
 
-  counter: number = 2;
-  /* CREATING NEW TABS */
-  // if the user wants to create a new tab, this function is called and checks which one has to be created
-  newTab(name: string, howTheUserCallsIt: string) {
-    for (let i in this.dynamicComponentsToChooseFrom) {
-      if (name == this.dynamicComponentsToChooseFrom[i].data.name) {
-        // this.loadMyDynamicComponent(this.dynamicComponentsToChooseFrom[i]);
-        this.arrayOfAllExistingComponents.push({ "name": name, "id": "ngb-tab-" + this.counter, "description": howTheUserCallsIt })
-      }
-    }
-    this.counter++;
-  };
-  // helper function for "newTab"
-  // create an individual id for each tab, literally when the user creates it
-  // this enables to distinguish and display the tabs
-  createAnIndividualId(name: string) {
-    let TIME = new Date().getTime();
-    let ID = name + TIME;
-    console.log('id :' + ID);
-    return ID;
-  }
-
-  ITEM: any;
-
-  // /* DESTROYING A TAB */
-  // ngOnDestroy() {
-  //   // ??? what goes in here ???
-  // }
-  // if the user has destroyed a tab, it is removed from the "dynamicComponents" array 
-  // therefore it is not there anymore to be selected
-  destroyTab(object: any) {
-    console.log(object);
-/*    this.arrayOfAllExistingComponents.forEach((item, index) => {
-      console.log('ITEM' + item);
-      console.log(index);
-
-      this.ITEM = item;
-
-      if (this.stuff.nextId == this.arrayOfAllExistingComponents[index].id) {
-        this.arrayOfAllExistingComponents.splice(index, 1);
-      }
-    })*/
-  };
-
-  // /* SELECT THE TAB THE USER WANTS TO SEE */
-  // // will be called on clicking on a tab (getting it's id)
-  // onChangeTab(id: string) {
-  //   for (let i of this.arrayOfAllExistingComponents) {
-  //     // checking which one of the existing tabs was selected
-  //     if (id == this.arrayOfAllExistingComponents[i].id) {
-  //       //with the help of the tabSet one may select by the id from the "arrayOfAllExistingComponents" array
-  //       tabSet.select(this.arrayOfAllExistingComponents[i].id);
-  //     }
-  //   }
-  //   this.loadMyDynamicComponent(this.dynamicComponents[0]);
-  // };
-
 
 
   onClick(name: string) {
@@ -152,12 +86,6 @@ export class AppComponent {
         break;
       }
     }
-  }
-
-  stuff: any;
-  test(object: any) {
-    console.log('custom event : ' + object);
-    this.stuff = object;
   }
 }
 

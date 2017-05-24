@@ -1,0 +1,14 @@
+.tab-button {
+        border: none;
+    background-color: white;
+}
+
+.dropdown-menu-right {
+    left: 0;
+}
+
+.nav-link {
+        text-align: center;
+    width: 100px;
+    height: 30px;
+}

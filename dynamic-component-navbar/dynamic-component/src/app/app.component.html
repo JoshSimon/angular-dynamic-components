@@ -1,34 +1,4 @@
-<ngb-tabset (tabChange)="test($event)"  #t="ngbTabset"> 
-  <ngb-tab *ngFor="let thing of arrayOfAllExistingComponents"> 
-    <ng-template ngbTabTitle  >{{thing.name}}
-      <button (click)="destroyTab(ngbTabTitle)">X</button>
-    </ng-template>
-    <ng-template ngbTabContent>
-      <div myHost> 
-      </div>
-    </ng-template>
-  </ngb-tab>
-  <ngb-tab>
-    <ng-template ngbTabTitle>
-        <div ngbDropdown class="d-inline-block">
-      <button class="tab-button" id="dropdownTitle" aria-haspopup="true" ngbDropdownToggle>New tab</button>
-      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownTitle">
-        <button class="dropdown-item" href="#" *ngFor="let tab of mocks" (click)="newTab(tab.name,'something')">{{tab.name}}</button>
-      </div>
-    </div>
-    </ng-template>
-    <ng-template ngbTabContent> 
-    </ng-template>
-  </ngb-tab>
-</ngb-tabset>
-
-<!-- KEY PROBLEM
-Due to the fact, that you cannot click on any element above this, without sacrificing usability, f.e. if you put a button in the "ngbTabTitle",
-another solution has to found to really trigger the change of the tab.
-
-In short: "(click)" is not an option up there to trigger a function that loads the component
--->
-
+<app-tab></app-tab> 
 
 
 <!-- WORKING ALTERNATIVE - hard coded list without tabs
@@ -38,10 +8,6 @@ This works beacuse the "(click)" finds it place neat in the place where the "*ng
 <ul class="nav navbar-nav">
   <li *ngFor="let thing of mocks"><a  href="#" (click)="onClick(thing.name)" >{{thing.name}}</a></li>
 </ul>
+<div myHost> 
+      </div>
 
-
-<p>ARRAY {{arrayOfAllExistingComponents | json }}</p>
-<button (click)="createAnIndividualId('name')">Create id</button>
-
-<p>Stuff {{stuff | json}}</p>
-<p *ngIf="ITEM">Item {{ITEM.id | json}}</p>

@@ -1,0 +1,38 @@
+<ngb-tabset (tabChange)=" watchTabs($event)"> 
+  <!-- this tab is keeping the tabs from the "arrayOfAllExistingComponents" -->
+  <ngb-tab *ngFor="let component of arrayOfAllExistingComponents"> 
+    <!-- tab title -->
+    <ng-template ngbTabTitle>{{component.name}}
+      <!-- button that closes (destroys) the tab -->
+      <button (click)="destroyTab() "><img src="/images/ic_clear_black_24dp_1x.png" alt="close"></button>
+    </ng-template>
+    <!-- content of the tab which is the dynamic component -->
+    <ng-template ngbTabContent>
+      TESTCONTENT
+    </ng-template>
+  </ngb-tab>
+  <!-- this tab is keeping the dropdown of possible tabs to be created -->
+  <ngb-tab>
+    <ng-template ngbTabTitle>
+        <div ngbDropdown class="d-inline-block">
+      <button class="tab-button" id="dropdownTitle" aria-haspopup="true" ngbDropdownToggle>New tab</button>
+      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownTitle">
+        <button class="dropdown-item" *ngFor="let tab of mocks" (click)="newTab(tab.name)">{{tab.name}}</button>
+      </div>
+    </div>
+    </ng-template>
+    <ng-template ngbTabContent> 
+    </ng-template>
+  </ngb-tab>
+</ngb-tabset>
+
+<p> ACTIVE TABS: {{activeTab | json }} </p>
+<p> TABS: {{arrayOfAllExistingComponents | json }} </p>
+
+
+<!-- KEY PROBLEM
+Due to the fact, that you cannot click on any element above this, without sacrificing usability, f.e. if you put a button in the "ngbTabTitle",
+another solution has to found to really trigger the change of the tab.
+
+In short: "(click)" is not an option up there to trigger a function that loads the component
+-->
